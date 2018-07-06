@@ -18,13 +18,51 @@
   <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
   <script type="text/babel">
-    const element = (
-      <div>Hello world</div>
+    class UpdateLoop extends React.Component {
+      componentDidMount() {
+        this.updateLoop = setInterval( () => {
+          console.log( `updating` )
+        }, 1000 )
+      }
+
+      componentWillUnmount() {
+        console.log( `stopped updating` );
+        clearInterval( this.updateLoop )
+      }
+
+      render() {
+        return (
+          <div>I have an update loop!</div>
+        )
+      }
+    }
+
+    class GameController extends /*UpdateLoop*/React.Component {
+      constructor( props ) {
+        super( props )
+        this.state = {
+          // instances: [ 'x', 'y', 'z' ]
+          instances: [ 'x' ]
+        }
+        setTimeout( () => {
+          this.setState( { instances: [] } )
+        }, 3000 )
+      }
+
+      render() {
+        return (
+          <div>
+            {this.state.instances.map( instance => <UpdateLoop key={instance} /> )}
+          </div>
+        )
+      }
+    }
+
+    const game = (
+      <GameController />
     )
-    ReactDOM.render(
-      element,
-      document.getElementById( `root` )
-    )
+
+    ReactDOM.render( game, document.getElementById( `root` ) )
   </script>
 </body>
 </html>
