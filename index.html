@@ -19,14 +19,19 @@
   <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
   <script type="text/babel">
     class UpdateLoop extends React.Component {
+      constructor(props) {
+        super(props)
+        this.props = props
+      }
+
       componentDidMount() {
         this.updateLoop = setInterval( () => {
-          console.log( `updating` )
+          console.log( `updating ${ this.props.id }` )
         }, 1000 )
       }
 
       componentWillUnmount() {
-        console.log( `stopped updating` );
+        console.log( `stopped updating ${ this.props.id }` );
         clearInterval( this.updateLoop )
       }
 
@@ -37,7 +42,7 @@
       }
     }
 
-    class GameController extends /*UpdateLoop*/React.Component {
+    class GameController extends UpdateLoop {
       constructor( props ) {
         super( props )
         this.state = {
@@ -51,15 +56,18 @@
 
       render() {
         return (
-          <div>
-            {this.state.instances.map( instance => <UpdateLoop key={instance} /> )}
-          </div>
+          <div>{
+            this.state.instances.map( instance => {
+              const props = { id: instance }
+              return <UpdateLoop key={ props.id } { ...props } />
+            } )
+          }</div>
         )
       }
     }
 
     const game = (
-      <GameController />
+      <GameController id={ `GameController` } />
     )
 
     ReactDOM.render( game, document.getElementById( `root` ) )
