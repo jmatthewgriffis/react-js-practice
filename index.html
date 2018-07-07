@@ -12,7 +12,12 @@
   <title>React Practice</title>
 
   <style>
+    .container {
+      position: relative;
+    }
+
     .update-loop {
+      position: relative;
       float: left;
       border: 1px solid black;
       width: 75px;
@@ -60,16 +65,48 @@
       }
     }
 
+    class Movable extends UpdateLoop {
+      constructor( props ) {
+        super( props )
+        this.props = props
+        this.state = {
+          top: 0,
+          left: 0
+        }
+      }
+
+      update = () => {
+        this.setState( {
+          // top: this.state.top + 1,
+          left: this.state.left + 1
+        } )
+      }
+
+      render() {
+        return (
+          <div className="update-loop"
+               style={ {
+                 top: this.state.top,
+                 left: this.state.left
+               } }
+               >
+            I am movable!
+          </div>
+        )
+      }
+    }
+
     class GameController extends UpdateLoop {
       constructor( props ) {
         super( props )
         this.state = {
           // instances: [ 'x', 'y', 'z' ]
           instances: [ 'x' ]
+          // instances: []
         }
-        setTimeout( () => {
-          this.setState( { instances: [] } )
-        }, 3000 )
+        // setTimeout( () => {
+        //   this.setState( { instances: [] } )
+        // }, 3000 )
       }
 
       update = () => {
@@ -78,10 +115,13 @@
 
       render() {
         return (
-          <div>{
+          <div className="container">{
             this.state.instances.map( instance => {
-              const props = { id: instance, log: true }
-              return <UpdateLoop key={ props.id } { ...props } />
+              const props = {
+                id: instance,
+                log: false
+              }
+              return <Movable key={ props.id } { ...props } />
             } )
           }</div>
         )
@@ -89,7 +129,7 @@
     }
 
     const game = (
-      <GameController id={ `GameController` } log={ true } />
+      <GameController id={ `GameController` } log={ false } />
     )
 
     ReactDOM.render( game, document.getElementById( `root` ) )
