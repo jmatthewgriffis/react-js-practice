@@ -24,10 +24,12 @@
         this.props = props
       }
 
+      update = () => {
+        console.log( `updating ${ this.props.id } - method not overriden` )
+      }
+
       componentDidMount() {
-        this.updateLoop = setInterval( () => {
-          console.log( `updating ${ this.props.id }` )
-        }, 1000 )
+        this.updateLoop = setInterval( () => this.update(), 1000 )
       }
 
       componentWillUnmount() {
@@ -52,6 +54,10 @@
         setTimeout( () => {
           this.setState( { instances: [] } )
         }, 3000 )
+      }
+
+      update = () => {
+        console.log( `updating ${ this.props.id } - method overriden` )
       }
 
       render() {
