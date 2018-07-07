@@ -10,6 +10,21 @@
         >
 
   <title>React Practice</title>
+
+  <style>
+    .update-loop {
+      float: left;
+      border: 1px solid black;
+      width: 75px;
+      text-align: center;
+      padding: 5px;
+      margin-left: 10px;
+    }
+
+    .update-loop:first-child {
+      margin-left: 0;
+    }
+  </style>
 </head>
 <body>
   <div id="root"></div>
@@ -19,8 +34,8 @@
   <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
   <script type="text/babel">
     class UpdateLoop extends React.Component {
-      constructor(props) {
-        super(props)
+      constructor( props ) {
+        super( props )
         this.props = props
       }
 
@@ -39,7 +54,7 @@
 
       render() {
         return (
-          <div>I have an update loop!</div>
+          <div className="update-loop">I have an update loop!</div>
         )
       }
     }
