@@ -44,7 +44,8 @@
       }
 
       componentDidMount() {
-        this.updateLoop = setInterval( () => this.update(), 1000 )
+        let updateInterval = 1000 / ( this.props.fps || 30 )
+        this.updateLoop = setInterval( () => this.update(), updateInterval )
       }
 
       componentWillUnmount() {
