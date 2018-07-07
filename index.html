@@ -40,7 +40,7 @@
       }
 
       update = () => {
-        console.log( `updating ${ this.props.id } - method not overriden` )
+        if ( this.props.log ) { console.log( `updating ${ this.props.id } - method not overriden` ) }
       }
 
       componentDidMount() {
@@ -48,7 +48,7 @@
       }
 
       componentWillUnmount() {
-        console.log( `stopped updating ${ this.props.id }` );
+        if ( this.props.log ) { console.log( `stopped updating ${ this.props.id }` ) }
         clearInterval( this.updateLoop )
       }
 
@@ -72,14 +72,14 @@
       }
 
       update = () => {
-        console.log( `updating ${ this.props.id } - method overriden` )
+        if ( this.props.log ) { console.log( `updating ${ this.props.id } - method overriden` ) }
       }
 
       render() {
         return (
           <div>{
             this.state.instances.map( instance => {
-              const props = { id: instance }
+              const props = { id: instance, log: true }
               return <UpdateLoop key={ props.id } { ...props } />
             } )
           }</div>
@@ -88,7 +88,7 @@
     }
 
     const game = (
-      <GameController id={ `GameController` } />
+      <GameController id={ `GameController` } log={ true } />
     )
 
     ReactDOM.render( game, document.getElementById( `root` ) )
