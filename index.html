@@ -71,15 +71,18 @@
         this.props = props
         this.state = {
           top: 0,
-          left: 0
+          left: 0,
+          velX: 5
         }
       }
 
       update = () => {
-        this.setState( {
-          // top: this.state.top + 1,
-          left: this.state.left + 1
-        } )
+        let newState = {}
+        let newPosX = this.state.left + this.state.velX
+        if ( newPosX > 1424 || newPosX < 0 ) { newState.velX = this.state.velX * -1 }
+        else { newState.left = this.state.left + this.state.velX }
+        // top: this.state.top + 1,
+        this.setState( newState )
       }
 
       render() {
